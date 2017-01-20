@@ -24,25 +24,26 @@ python manage.py branch_rm
 ## Commands
 
 ### Run command
-List all branches based off DATABASES['default']['NAME']
+Run a command with DATABASES['default']['NAME'] set to DATABASES['default']['NAME']_`$ git rev-prse --abbrev-ref HEAD`
+
 ```
-python manage.py branch_ls
+python manage.py branch_it diffsettings
 ```
 
 ### List
-List all branches based off DATABASES['default']['NAME']
+List all databases based off like DATABASES['default']['NAME']%
 ```
 python manage.py branch_ls
 ```
 
 ### Create
-Makes a database based of the result of `$ git rev-prse --abbrev-ref HEAD`
+Makes a database based off the result of `$ git rev-prse --abbrev-ref HEAD`
 ```
 $ python manage.py branch_mk
 ```
 
 ### Delete
-Deletes a database based of the result of `$ git rev-prse --abbrev-ref HEAD`
+Deletes a database based off the result of `$ git rev-prse --abbrev-ref HEAD`
 ```
 $ python manage.py branch_rm
 ```
