@@ -1,14 +1,15 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db import connection
-from subprocess import check_output
+from subprocess import call
+import os
 from brancherer.base import DbNameMixin
+import ipdb
 
 
 class Command(DbNameMixin, BaseCommand):
-    help = 'Creates another database branch by default uses your current git branch as the substring and your current default database as the template'
+    help = 'Run another django command using you current git branch as the branch name'
 
     def handle(self, *args, **options):
-        res = check_output('git rev-parse --abbrev-ref HEAD', shell=True)
-        self.stdout.write("{}".format(res))
-        with connection.cursor() as cursor:
-            cursor.execute("CREATE DATABASE {name}_{branch} template {name}".format(branch=res, name=self.get_db_name()))
+        with open(self.branched_settings_module_file, 'w') as f:
+            f.write(self.formated_setting_file())
+        os.environ["DJANGO_SETTINGS_MODULE"] = self.branched_settings_module
