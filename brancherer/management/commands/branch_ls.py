@@ -7,7 +7,7 @@ class Command(DbNameMixin, BaseCommand):
 
     def handle(self, *args, **options):
         with connection.cursor() as cursor:
-            cursor.execute("SELECT datname FROM pg_database WHERE datname like '{}%';".format(self.get_db_name()))
+            cursor.execute("SELECT datname FROM pg_database WHERE datname like '{}%';".format(self.get_db_name))
             databases = cursor.fetchall()
             self.stdout.write("Your branched databases:")
             for datname in databases:

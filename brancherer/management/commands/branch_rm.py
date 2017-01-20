@@ -9,4 +9,4 @@ class Command(DbNameMixin, BaseCommand):
     def handle(self, *args, **options):
         res = self.branch_name
         with connection.cursor() as cursor:
-            cursor.execute("DROP DATABASE {name}_{branch}".format(branch=res, name=self.get_db_name()))
+            cursor.execute("DROP DATABASE {name}_{branch}".format(branch=res, name=self.get_db_name))

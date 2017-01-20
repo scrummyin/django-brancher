@@ -7,6 +7,11 @@ class DbNameMixin(object):
     def add_arguments(self, parser):
         pass
 
+    @property
+    def full_branched_db_name(self):
+        return '{}_{}'.format(self.get_db_name, self.branch_name)
+
+    @property
     def get_db_name(self):
         return settings.DATABASES['default']['NAME']
 
