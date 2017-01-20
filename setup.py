@@ -11,23 +11,6 @@ from setuptools import setup, find_packages
 import json
 
 version = '0.1.dev0'
-def convert_to_str(d):
-    """
-    Recursively convert all values in a dictionary to strings
-
-    This is required because setup() does not like unicode in
-    the values it is supplied.
-    """
-    d2 = {}
-    for k, v in d.items():
-        k = str(k)
-        if type(v) in [list, tuple]:
-            d2[k] = [str(a) for a in v]
-        elif type(v) is dict:
-            d2[k] = convert_to_str(v)
-        else:
-            d2[k] = str(v)
-    return d2
 
 setup_kwargs = {
     "name": "django-brancherer",
