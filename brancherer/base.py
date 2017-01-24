@@ -4,8 +4,10 @@ import os
 
 
 class DbNameMixin(object):
+    _branch_name = None
+
     def add_arguments(self, parser):
-        pass
+        parser.add_argument('--branch_name')
 
     @property
     def full_branched_db_name(self):
@@ -17,27 +19,9 @@ class DbNameMixin(object):
 
     @property
     def branch_name(self):
-        return check_output('git rev-parse --abbrev-ref HEAD', shell=True).strip()
+        if self._branch_name is None:
+            self._branch_name = check_output('git rev-parse --abbrev-ref HEAD', shell=True).strip()
+        return self._branch_name
 
-    @property
-    def branched_settings_module(self):
-        return 'branch_it_settings'
-
-    @property
-    def branched_settings_module_file(self):
-        return os.path.join(os.getcwd(), '{}.py'.format(self.branched_settings_module))
-
-    def settings_file_template(self):
-        return "from {settings_file} import *; DATABASES['default']['NAME'] = '{base_db_name}_{db_branch}'"
-
-    def formated_setting_file(self, **kwargs):
-        settings_file_kwargs = self._default_settings_file_kwargs()
-        settings_file_kwargs.update(**kwargs)
-        return self.settings_file_template().format(**settings_file_kwargs)
-
-    def _default_settings_file_kwargs(self):
-        return {
-                'settings_file': settings.SETTINGS_MODULE,
-                'base_db_name': settings.DATABASES['default']['NAME'],
-                'db_branch': self.branch_name,
-        }
+    def handle(self, *args, **options):
+        self._branch_name = options['branch_name']

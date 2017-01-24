@@ -3,7 +3,7 @@ from django.db import connection
 from brancherer.base import DbNameMixin
 
 class Command(DbNameMixin, BaseCommand):
-    help = 'Lists all branches'
+    help = 'Lists all branches, a -> indicates current. (AKA what branch_it will run against)'
 
     def handle(self, *args, **options):
         with connection.cursor() as cursor:
@@ -11,4 +11,8 @@ class Command(DbNameMixin, BaseCommand):
             databases = cursor.fetchall()
             self.stdout.write("Your branched databases:")
             for datname in databases:
-                self.stdout.write("\t{}".format(datname[0]))
+                result = datname[0]
+                if result == self.full_branched_db_name:
+                    self.stdout.write("->\t{}".format(datname[0]))
+                else:
+                    self.stdout.write("\t{}".format(datname[0]))
