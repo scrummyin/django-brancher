@@ -10,7 +10,7 @@ Borrowed almost wholesale from Armstrong http://armstrongcms.org/
 from setuptools import setup, find_packages
 import json
 
-version = '0.1'
+version = '0.2.dev0'
 
 setup_kwargs = {
     "name": "django-brancher",
