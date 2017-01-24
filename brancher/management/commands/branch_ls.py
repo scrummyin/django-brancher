@@ -7,6 +7,7 @@ class Command(DbNameMixin, BaseCommand):
     help = 'Lists all branches, a -> indicates current. (AKA what branch_it will run against)'
 
     def handle(self, *args, **options):
+        self.change_defaults(**options)
         with connection.cursor() as cursor:
             cursor.execute("SELECT datname FROM pg_database WHERE datname like '{}%';".format(self.get_db_name))
             databases = cursor.fetchall()

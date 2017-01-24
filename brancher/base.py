@@ -5,6 +5,7 @@ from subprocess import check_output
 
 class DbNameMixin(object):
     _branch_name = None
+    _db_name = None
 
     def add_arguments(self, parser):
         parser.add_argument('--branch_name', help="This overrides the git branch as the branch name")
@@ -15,7 +16,9 @@ class DbNameMixin(object):
 
     @property
     def get_db_name(self):
-        return settings.DATABASES['default']['NAME']
+        if self._db_name is None:
+            self._db_name = settings.DATABASES['default']['NAME']
+        return self._db_name
 
     @property
     def branch_name(self):

@@ -13,7 +13,7 @@ class Command(DbNameMixin, BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('-i', '--isolate', action='store_true', help="This will run create databse before the command and drop database afterwards")
-        parser.add_argument('-m', '--migrate', action='store_true', help="Will run migrate before running the command you based in")
+        parser.add_argument('-m', '--migrate', action='store_true', help="Will run migrate before running the command you specified")
         parser.add_argument('subcommand', nargs=argparse.REMAINDER)
         super(Command, self).add_arguments(parser)
 
@@ -26,17 +26,19 @@ class Command(DbNameMixin, BaseCommand):
         self.change_defaults(**options)
         self.run_if_isolate(self.create_database)
         subcommand = options['subcommand']
-        old_databse_setting = settings.DATABASES['default']['NAME']
+        if not subcommand:
+            raise CommandError('Please provide command')
         settings.DATABASES['default']['NAME'] = self.full_branched_db_name
         self.migrate_if_needed()
         try:
             call_command(*subcommand)
-        except e:
-            settings.DATABASES['default']['NAME'] = old_databse_setting
-            db.connections.close_all()
-            self.run_if_isolate(self.drop_dataase)
+        except Exception as e:
+            self.cleanup_if_needed()
             raise e
-        settings.DATABASES['default']['NAME'] = old_databse_setting
+        self.cleanup_if_needed()
+
+    def cleanup_if_needed(self):
+        settings.DATABASES['default']['NAME'] = self.get_db_name
         db.connections.close_all()
         self.run_if_isolate(self.drop_dataase)
 
