@@ -1,12 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
-from django.db import connection
-from subprocess import call
-from brancherer.base import DbNameMixin
+from brancher.base import DbNameMixin
 from django.core.management import call_command
-import os
 import argparse
-import ipdb
 
 
 class Command(DbNameMixin, BaseCommand):

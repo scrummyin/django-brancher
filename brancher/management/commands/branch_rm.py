@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.db import connection
-from brancherer.base import DbNameMixin
+from brancher.base import DbNameMixin
 
 
 class Command(DbNameMixin, BaseCommand):

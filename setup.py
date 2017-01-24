@@ -13,10 +13,10 @@ import json
 version = '0.1.dev0'
 
 setup_kwargs = {
-    "name": "django-brancherer",
+    "name": "django-brancher",
     "author": "Brian Faherty",
     "author_email": "anothergenericuser@gmail.com",
-    "url": "https://github.com/scrummyin/django-brancherer",
+    "url": "https://github.com/scrummyin/django-brancher",
     "packages": find_packages(),
     "include_package_data": True,
     "version": version,

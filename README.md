@@ -1,4 +1,4 @@
-# brancherer
+# django-brancher
 This is a Django app to help manage branches that contain database migrations. It basically creates a new database from a template of the existing default database and then uses that new branch-specific database for `./manage.py migrate` and `./manage.py runserver` commands.
 
 *This is not intended for production use.*
@@ -9,8 +9,8 @@ This is a Django app to help manage branches that contain database migrations. I
   * git
   * postgres
   * your postgres user has createdb permission (`alter role <user> createdb;`)
-  * django-brancherer installed via pip
-  * brancherer added to your Django installed apps
+  * django-brancher installed via pip
+  * brancher added to your Django installed apps
 
 ### Sample workflow
 This is an example work flow to create a new branch, run migrations on it, start runserver, and finally delete it.
