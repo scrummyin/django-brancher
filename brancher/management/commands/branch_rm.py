@@ -7,4 +7,4 @@ class Command(DbNameMixin, BaseCommand):
 
     def handle(self, *args, **options):
         self.change_defaults(**options)
-        self.drop_dataase()
+        self.drop_database()

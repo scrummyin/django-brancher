@@ -40,7 +40,7 @@ class Command(DbNameMixin, BaseCommand):
     def cleanup_if_needed(self):
         settings.DATABASES['default']['NAME'] = self.get_db_name
         db.connections.close_all()
-        self.run_if_isolate(self.drop_dataase)
+        self.run_if_isolate(self.drop_database)
 
     def run_if_isolate(self, func):
         if self._isolate:
